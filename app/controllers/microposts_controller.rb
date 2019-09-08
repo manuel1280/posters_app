@@ -1,30 +1,33 @@
 class MicropostsController < ApplicationController
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.all
+    @microposts = Micropost.all.order("created_at desc")
   end
 
   # GET /microposts/1
   # GET /microposts/1.json
   def show
+    @micropost = Micropost.find(params[:id])
   end
 
   # GET /microposts/new
   def new
-    @micropost = Micropost.new
+    @micropost = current_user.microposts.build
   end
 
   # GET /microposts/1/edit
   def edit
+    @micropost = Micropost.find(params[:id])
   end
 
   # POST /microposts
   # POST /microposts.json
   def create
-    @micropost = Micropost.new(micropost_params)
+    @micropost = current_user.microposts.build(instrument_params)
 
     respond_to do |format|
       if @micropost.save
