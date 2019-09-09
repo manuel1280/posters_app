@@ -16,7 +16,7 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/new
   def new
-    @micropost = current_user.microposts.build
+    @micropost = current_user.microposts.new
   end
 
   # GET /microposts/1/edit
@@ -27,7 +27,7 @@ class MicropostsController < ApplicationController
   # POST /microposts
   # POST /microposts.json
   def create
-    @micropost = current_user.microposts.build(instrument_params)
+    @micropost = current_user.microposts.new(micropost_params)
 
     respond_to do |format|
       if @micropost.save
@@ -64,6 +64,8 @@ class MicropostsController < ApplicationController
     end
   end
 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_micropost
@@ -72,6 +74,8 @@ class MicropostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def micropost_params
-      params.require(:micropost).permit(:content, :user_id)
+      params.require(:micropost).permit(:content)
     end
+
+
 end
