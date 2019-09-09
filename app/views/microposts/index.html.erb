@@ -13,17 +13,17 @@
   <div class="hero-body">
       <div class="container">
         <% @microposts.each do |micropost| %>
-          <div>
-            <span class="tag" style="width: 800px;"><%= micropost.content %></span>
-            <p class="tag">published by <%= micropost.user.name %> <%= micropost.user.last_name %> </p>
-          </div>
-          <div>
+          <div >
+            <div class="notification" style="width: 900px; margin:0px ", wrapper: false><%= micropost.content %></div>
+            <p class="tag is-warning">published by <%= micropost.user.name %> <%= micropost.user.last_name %> </p>
+          
             <% if micropost_author(micropost) %>
               <%= link_to 'Edit', edit_micropost_path(micropost), class: "button is-small" %>
               <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "Are you sure ?" }, class: "button is-small" %>
             <% end %>
-          </div>
-          <br>
+
+        </div>
+        <br>
         <% end %>
     </div>
   </div>
