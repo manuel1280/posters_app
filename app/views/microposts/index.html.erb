@@ -1,0 +1,30 @@
+<% content_for :header do %>
+<section class="hero is-warning">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        micropost published
+      </h1>
+    </div>
+  </div>
+</section>
+<% end %>
+
+  <div class="hero-body">
+      <div class="container">
+        <% @microposts.each do |micropost| %>
+          <div>
+            <span class="tag" style="width: 800px;"><%= micropost.content %></span>
+            <p class="tag">published by <%= micropost.user.name %> <%= micropost.user.last_name %> </p>
+          </div>
+          <div>
+            <% if micropost_author(micropost) %>
+              <%= link_to 'Edit', edit_micropost_path(micropost), class: "button is-small" %>
+              <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "Are you sure ?" }, class: "button is-small" %>
+            <% end %>
+          </div>
+          <br>
+        <% end %>
+    </div>
+  </div>
+

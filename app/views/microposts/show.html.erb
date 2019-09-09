@@ -1,0 +1,13 @@
+  <div class="columns">
+    <div class="column is-8">
+      <p>
+        <strong>Content:</strong>
+        <%= @micropost.content %>
+      </p>
+        <% if micropost_author(@micropost) %>
+          <%= link_to 'Edit', edit_micropost_path(@micropost), class: 'button' %>
+        <% end %>
+
+      <%= link_to 'Back', microposts_path , class: 'button'%>
+</div>
+</div>
