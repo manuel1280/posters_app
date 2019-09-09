@@ -10,22 +10,21 @@
 </section>
 <% end %>
 
-<div class="hero-body">
-    <div class="container">
-  <% @microposts.each do |micropost| %>
-        <div>
-          <span class="tag is-dark"><%= micropost.content %></span>
-          <p class="tag is-gray">published by <%= micropost.user.name %> <%= micropost.user.last_name %> </p>
-        </div>
-    <div class="pa3">
-      <% if micropost_author(micropost) %>
-         <%= link_to 'Edit', edit_micropost_path(micropost), class: "button is-small" %>
-         <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "Are you sure ?" }, class: "button is-small" %>
-      <% end %>
-
+  <div class="hero-body">
+      <div class="container">
+        <% @microposts.each do |micropost| %>
+          <div>
+            <span class="tag" style="width: 800px;"><%= micropost.content %></span>
+            <p class="tag">published by <%= micropost.user.name %> <%= micropost.user.last_name %> </p>
+          </div>
+          <div>
+            <% if micropost_author(micropost) %>
+              <%= link_to 'Edit', edit_micropost_path(micropost), class: "button is-small" %>
+              <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "Are you sure ?" }, class: "button is-small" %>
+            <% end %>
+          </div>
+          <br>
+        <% end %>
     </div>
   </div>
-  <% end %>
 
-</div>
-</div>
