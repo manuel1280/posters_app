@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_130457) do
+ActiveRecord::Schema.define(version: 2019_09_10_144630) do
 
   create_table "microposts", force: :cascade do |t|
     t.text "content"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 2019_09_10_130457) do
     t.datetime "updated_at", null: false
     t.integer "time_posted"
     t.datetime "expiration_date"
+  end
+
+  create_table "post_whatcheds", force: :cascade do |t|
+    t.string "add"
+    t.integer "user_id"
+    t.integer "micropost_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
