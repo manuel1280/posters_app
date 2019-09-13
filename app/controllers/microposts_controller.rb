@@ -1,11 +1,12 @@
 class MicropostsController < ApplicationController
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
-
+  
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.all.order("created_at desc")
+    @microposts = Micropost.where("expiration_date > ?", Date.today).order("created_at desc")
+    
   end
 
   # GET /microposts/1
@@ -27,8 +28,10 @@ class MicropostsController < ApplicationController
   # POST /microposts
   # POST /microposts.json
   def create
-    @micropost = current_user.microposts.new(micropost_params)
 
+    @micropost = current_user.microposts.new(micropost_params)
+    set_expiration_date(@micropost)
+    
     respond_to do |format|
       if @micropost.save
         format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }
@@ -43,6 +46,7 @@ class MicropostsController < ApplicationController
   # PATCH/PUT /microposts/1
   # PATCH/PUT /microposts/1.json
   def update
+    set_expiration_date(@micropost)
     respond_to do |format|
       if @micropost.update(micropost_params)
         format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }
@@ -77,5 +81,8 @@ class MicropostsController < ApplicationController
       params.require(:micropost).permit(:content, :time_posted)
     end
 
+    def set_expiration_date(micropost)
+      micropost.expiration_date = micropost.created_at + micropost.time_posted.days
+    end
 
 end
