@@ -11,7 +11,7 @@
         required: true, input_html: { class: "input" }, 
         wrapper: false, label_html: { class:"label" } %>
       </div>
-
+      
       <% if !micropost.expiration_date.nil? %>
         <p class="tag is-warning">will expire on <%= micropost.expiration_date.to_formatted_s(:short)%> </p>
         <br><br>
@@ -24,6 +24,8 @@
       </div>
     </div>
 
+    <p>*set expiration in days</p>
+    
     <div class="form-actions">
       <br>
       <%= f.button :submit ,class:"button is-warning" %>
