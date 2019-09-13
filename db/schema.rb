@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_08_215327) do
+ActiveRecord::Schema.define(version: 2019_09_10_144630) do
 
   create_table "microposts", force: :cascade do |t|
     t.text "content"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "time_posted"
+    t.datetime "expiration_date"
+  end
+
+  create_table "post_whatcheds", force: :cascade do |t|
+    t.string "add"
+    t.integer "user_id"
+    t.integer "micropost_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -25,6 +35,11 @@ ActiveRecord::Schema.define(version: 2019_09_08_215327) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
