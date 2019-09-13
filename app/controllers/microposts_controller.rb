@@ -5,7 +5,7 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.where("expiration_date > ?", Date.today).order("created_at desc")
+    @microposts = Micropost.where("expiration_date > ? and watched = ?", Date.today, false).order("created_at desc")
     
   end
 
@@ -46,7 +46,7 @@ class MicropostsController < ApplicationController
   # PATCH/PUT /microposts/1
   # PATCH/PUT /microposts/1.json
   def update
-    set_expiration_date(@micropost)
+    edit_expiration_date(@micropost)
     respond_to do |format|
       if @micropost.update(micropost_params)
         format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }
@@ -68,6 +68,17 @@ class MicropostsController < ApplicationController
     end
   end
 
+  def watched
+    @micropost = Micropost.find(params[:id])
+    if !@micropost.watched
+      @watched = @micropost.update(watched: true)
+      redirect_to root_path, notice: 'Micropost was successfully archived.'
+    else
+      @watched = @micropost.update(watched: false)
+    end
+    
+  end
+
 
 
   private
@@ -82,6 +93,9 @@ class MicropostsController < ApplicationController
     end
 
     def set_expiration_date(micropost)
+      micropost.expiration_date = Date.today + micropost.time_posted.days
+    end
+    def edit_expiration_date(micropost)
       micropost.expiration_date = micropost.created_at + micropost.time_posted.days
     end
 

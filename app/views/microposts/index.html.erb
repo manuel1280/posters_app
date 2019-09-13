@@ -22,7 +22,7 @@
               <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "Are you sure ?" }, class: "button is-small" %>
               <% elsif user_signed_in? %>
               <div style="width: 280px; float: right; aling-text:right">
-                <%= link_to 'whatched', "#", class: "button is-small is-rounded" %>
+                <%= link_to 'watched', post_watched_path(micropost), class: "button is-small is-rounded" %>
               </div>
             <% end %>
 
