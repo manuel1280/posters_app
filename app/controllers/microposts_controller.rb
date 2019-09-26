@@ -5,7 +5,8 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = current_user.microposts.order("created_at desc")
+    @microposts = feed()
+    @current_user = current_user
   end
 
   # GET /microposts/1
@@ -98,4 +99,7 @@ class MicropostsController < ApplicationController
       micropost.expiration_date = micropost.created_at + micropost.time_posted.days
     end
 
+    def feed
+      posters = Micropost.where("id NOT IN (SELECT micropost_id FROM seen_posts WHERE user_id = ?)", current_user.id)
+    end
 end

@@ -20,9 +20,10 @@
             <% if micropost_author(micropost) %>
               <%= link_to 'Edit', edit_micropost_path(micropost), class: "button is-small" %>
               <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "Are you sure ?" }, class: "button is-small" %>
-              <% elsif user_signed_in? %>
-              <div style="width: 280px; float: right; aling-text:right">
-                <%# <%= link_to 'watched', post_watched_path(micropost), class: "button is-small is-rounded" %>
+              <% elsif %>
+              <div style="width: 300px; float: right; aling-text:right">
+                <%= link_to "mark as seen", controller: :seen_posts, action: :create, user_id: @current_user.id, micropost_id: micropost.id, class:"button"   %>
+                <%# <%= link_to 'seen', post_seen_path(@current_user.id, micropost.id), class: "button is-small is-rounded" %>
               </div>
             <% end %>
 

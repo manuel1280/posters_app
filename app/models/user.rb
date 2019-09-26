@@ -4,5 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :microposts
-  has_many :post_whatcheds
+  has_many :seen_posts, dependent: :destroy
 end
