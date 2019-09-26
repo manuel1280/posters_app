@@ -5,7 +5,7 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.feed_posts(current_user.id)
+    @microposts = Micropost.feed_posts(current_user.id).where("expiration_date > ?", Time.zone.now).order("created_at desc")
     @current_user = current_user
   end
 
@@ -80,10 +80,10 @@ class MicropostsController < ApplicationController
     end
 
     def set_expiration_date(micropost)
-      micropost.expiration_date = Date.today + micropost.time_posted.days
+      micropost.expiration_date = Time.zone.now + micropost.time_posted.minutes
     end
     def edit_expiration_date(micropost)
-      micropost.expiration_date = micropost.created_at + micropost.time_posted.days
+      micropost.expiration_date = micropost.created_at + micropost.time_posted.minutes
     end
 
 end
