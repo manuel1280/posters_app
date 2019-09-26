@@ -5,7 +5,7 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = feed()
+    @microposts = Micropost.feed_posts(current_user.id)
     @current_user = current_user
   end
 
@@ -68,19 +68,6 @@ class MicropostsController < ApplicationController
     end
   end
 
-  # def watched
-  #   @micropost = Micropost.find(params[:id])
-  #   if !@micropost.watched
-  #     @watched = @micropost.update(watched: true)
-  #     redirect_to root_path, notice: 'Micropost was successfully archived.'
-  #   else
-  #     @watched = @micropost.update(watched: false)
-  #   end
-    
-  # end
-
-
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_micropost
@@ -99,7 +86,4 @@ class MicropostsController < ApplicationController
       micropost.expiration_date = micropost.created_at + micropost.time_posted.days
     end
 
-    def feed
-      posters = Micropost.where("id NOT IN (SELECT micropost_id FROM seen_posts WHERE user_id = ?)", current_user.id)
-    end
 end
