@@ -12,21 +12,28 @@
 
   <body class="<%= yield (:body_class) %>">
     <% if flash[:notice] %>
-      <div class="notification is-success global-notification">
+      <div id = 'notify' class="notification is-success global-notification">
+      <button class="delete" onclick ="hide_flash()"></button>
         <p class="notice"><%= notice %></p>
       </div>
     <% end %>
     <% if flash[:alert] %>
-    <div class="notification is-danger global-notification">
+    <div id = 'notify' class="notification is-danger global-notification">
+      <button class="delete" onclick ="hide_flash()"></button>
       <p class="alert"><%= alert %></p>
     </div>
     <% end %>
      <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
+      <% if user_signed_in?%>
         <%= link_to root_path, class:"navbar-item" do %>
           <h1 class="title is-5">Home</h1>
         <% end  %>
-      <div class="navbar-burger burger" data-target="navbar">
+        <%= link_to microposts_path, class:"navbar-item" do %>
+          <h1 class="title is-5">My posts</h1>
+        <% end  %>
+        <div class="navbar-burger burger" data-target="navbar">
+      <%end%>
         <span></span>
         <span></span>
         <span></span>
@@ -64,11 +71,12 @@
 
   <%= yield(:header) %>
 
-  <div class="container">
-
+  <% if current_page?(root_path) %>
     <%= yield %>
-
-  </div>
-
+  <%else%>
+    <div class="container">
+      <%= yield %>
+    </div>
+  <%end%>
   </body>
 </html>

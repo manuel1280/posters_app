@@ -14,3 +14,8 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+
+function hide_flash(){
+    document.getElementById('notify').style.display = 'none';
+}
