@@ -5,8 +5,7 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.where("expiration_date > ? and watched = ?", Date.today, false).order("created_at desc")
-    
+    @microposts = current_user.microposts.order("created_at desc")
   end
 
   # GET /microposts/1
@@ -68,16 +67,16 @@ class MicropostsController < ApplicationController
     end
   end
 
-  def watched
-    @micropost = Micropost.find(params[:id])
-    if !@micropost.watched
-      @watched = @micropost.update(watched: true)
-      redirect_to root_path, notice: 'Micropost was successfully archived.'
-    else
-      @watched = @micropost.update(watched: false)
-    end
+  # def watched
+  #   @micropost = Micropost.find(params[:id])
+  #   if !@micropost.watched
+  #     @watched = @micropost.update(watched: true)
+  #     redirect_to root_path, notice: 'Micropost was successfully archived.'
+  #   else
+  #     @watched = @micropost.update(watched: false)
+  #   end
     
-  end
+  # end
 
 
 
