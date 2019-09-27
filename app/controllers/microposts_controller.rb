@@ -46,7 +46,7 @@ class MicropostsController < ApplicationController
   # PATCH/PUT /microposts/1
   # PATCH/PUT /microposts/1.json
   def update
-    edit_expiration_date(@micropost)
+    set_expiration_date(@micropost)
     respond_to do |format|
       if @micropost.update(micropost_params)
         format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }
@@ -81,9 +81,6 @@ class MicropostsController < ApplicationController
 
     def set_expiration_date(micropost)
       micropost.expiration_date = Time.zone.now + micropost.time_posted.minutes
-    end
-    def edit_expiration_date(micropost)
-      micropost.expiration_date = micropost.created_at + micropost.time_posted.minutes
     end
 
 end
