@@ -28,11 +28,8 @@ class MicropostsController < ApplicationController
   # POST /microposts
   # POST /microposts.json
   def create
-
     @micropost = current_user.microposts.new(micropost_params)
-    set_expiration_date(@micropost)
-    
-    respond_to do |format|
+        respond_to do |format|
       if @micropost.save
         format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }
         format.json { render :show, status: :created, location: @micropost }
@@ -46,7 +43,6 @@ class MicropostsController < ApplicationController
   # PATCH/PUT /microposts/1
   # PATCH/PUT /microposts/1.json
   def update
-    set_expiration_date(@micropost)
     respond_to do |format|
       if @micropost.update(micropost_params)
         format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }
@@ -79,8 +75,5 @@ class MicropostsController < ApplicationController
       params.require(:micropost).permit(:content, :time_posted)
     end
 
-    def set_expiration_date(micropost)
-      micropost.expiration_date = Time.zone.now + micropost.time_posted.minutes
-    end
 
 end
