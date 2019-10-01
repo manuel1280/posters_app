@@ -2,13 +2,13 @@ class SeenPostsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    user_id = params[:user_id]
-    micropost_id = params[:micropost_id]
-
+    user_id = current_user.id
+    micropost_id = params[:id]
+   
     @post_seen = SeenPost.new(user_id: user_id, micropost_id: micropost_id)
     respond_to do |format|
       if @post_seen.save
-        format.html { redirect_to microposts_path, notice: 'post was archived' }
+        format.html { redirect_to microposts_path, notice: 'post was successfuly archived' }
         format.json 
       else
         format.html { redirect_to microposts_path, alert: 'error.' }

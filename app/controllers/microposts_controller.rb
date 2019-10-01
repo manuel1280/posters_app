@@ -75,5 +75,4 @@ class MicropostsController < ApplicationController
       params.require(:micropost).permit(:content, :time_posted)
     end
 
-
 end

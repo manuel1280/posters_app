@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :microposts
   devise_for :users, controllers: {registrations: 'registrations'}
-  get 'seen_posts/create', to: 'seen_posts#create', as: :post_seen
-  get 'seen_posts/destroy'
+  post 'post_seen/:id', to: 'seen_posts#create', as: :post_seen
+  post 'seen_posts/destroy'
   get 'home/index'
 
   root 'home#index'
